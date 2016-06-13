@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 前台登录 -->
+	<package name="shop.front" extends="shop-default">
+		<!-- 配置拦截器  --> 
+		<action name="index">
+			<result name="success">/WEB-INF/zh_CN/index.jsp</result>
+		</action>
+	</package>
+
+
+
+	<package name="ajax" extends="json-default">
+		<action name="ResendMobilePwd" class="com.shop.action.ResendMobilePwd">
+			<result type="json"></result>
+		</action>
+		<action name="CartInfo" class="com.shop.action.CartInfoAction">
+			<result type="json"></result>
+			<param name="root">result</param>
+		</action>
+	</package>
+
+	<!-- 返回类型为json 在sjon-default中定义 -->
+	<!-- <result type="json"> -->
+
+	<!-- root的值对应要返回的值的属性 -->
+	<!-- 这里的result值即是 对应action中的 result -->
+	<!-- <param name="root">result</param> -->
+	<!-- </result> -->
+	<!-- </action> -->
+	<!-- 消费者Action -->
+	<package name="shop.customer" extends="shop.front">
+		<action name="customer_*" method="{1}"
+			class="com.shop.action.user.CustomerAction">
+			<result name="input">/WEB-INF/pages/user/customer_login.jsp</result>
+<!-- 			<interceptor-ref name="customerDefaultStack"/> -->
+		</action>
+		<action name="SecurityCodeImageAction" class="com.shop.token.ValidCodeAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">imageStream</param>
+				<param name="bufferSize">2048</param>
+			</result>
+		</action>
+	</package>
+
+
+	<package name="default" extends="struts-default">
+		<action name="upload" class="com.shop.updown.UploadAction">
+			<param name="savePath">/test</param>
+			<result>WEB-INF/pages/updown/upload.jsp</result>
+			<result name="input">WEB-INF/pages/updown/upload-input1.jsp</result>
+		</action>
+		<action name="uploadPic" class="com.shop.test.OperateImage">
+			<result>WEB-INF/pages/updown/upload.jsp</result>
+			<result name="input">WEB-INF/pages/updown/upload-input.jsp</result>
+		</action>
+<!-- 		店铺，商品 查询 -->
+		<action name="search_*" method="{1}" class="com.shop.action.SearchGoodsAndStoreAction">
+			<result name="successstore">WEB-INF/zh_CN/jsp/home/searchforstore.jsp</result>
+			<result name="successgoods">WEB-INF/zh_CN/jsp/home/searchforgoods.jsp</result>
+		</action>		
+	</package>
+	<package name="shop.order" extends="shop.front">
+		<action name="login11" class="login">
+			<result name="success">WEB-INF/zh_CN/jsp/login.jsp</result>
+		</action>
+		<action name="login" class="com.shop.action.user.CustomerAction">
+			<result name="success">WEB-INF/zh_CN/jsp/login.jsp</result>
+			<interceptor-ref name="customerDefaultStack"/>
+		</action>
+		<action name="retPass">
+			<result name="success">WEB-INF/pages/user/customer_retPass.jsp</result>
+		</action>
+		<action name="in">
+			<!-- <result name="success">WEB-INF/zh_CN/temp.jsp</result> -->
+			<result name="success">WEB-INF/pages/updown/upload.jsp</result>
+		</action>
+
+		<action name="search">
+			<result name="success">WEB-INF/zh_CN/jsp/home/searchforshop.jsp</result>
+		</action>
+		<action name="searchforstore">
+			<result name="success">WEB-INF/zh_CN/jsp/home/searchforstore.jsp
+			</result>
+		</action>
+		<action name="searchForGoods">
+			<result name="success">WEB-INF/zh_CN/indexForGoods.jsp</result>
+		</action>
+		<!-- 加入购物车页面 -->
+		<action name="goodsdetil">
+			<result name="success">WEB-INF/zh_CN/jsp/home/goodsdetil.jsp</result>
+		</action>
+		<!-- 购物车页面 -->
+		<action name="gocart">
+			<result name="success">WEB-INF/zh_CN/jsp/home/gocart.jsp</result>
+		</action>
+		<!-- 提交订单 -->
+		<action name="submitOrder">
+			<result name="success">WEB-INF/zh_CN/jsp/home/gocartsbt.jsp</result>
+		</action>
+		<!-- 提交成功页面 -->
+		<action name="gocartsucc">
+			<result name="success">WEB-INF/zh_CN/jsp/home/gocartsucc.jsp</result>
+		</action>
+		<!-- 我的订单 -->
+		<action name="orderlist">
+			<result name="success">WEB-INF/zh_CN/jsp/home/orderlist.jsp</result>
+			<interceptor-ref name="customerDefaultStack"/>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.org/dtds/sql-map-2.dtd">
+<sqlMap namespace="Goods">
+<!--     搜索店铺 -->
+    <typeAlias alias="String" type="java.lang.String"/>
+    <typeAlias alias="HashMap" type="java.util.HashMap"/>
+    <resultMap id="qryStoreMap" class="HashMap">
+        <result property="StoreName" column="store_name"/>
+        <result property="StoreGrade" column="store_grade"/>
+        <result property="StoreUrl" column="store_url"/>
+        <result property="StoreGoUrl" column="store_gourl"/>
+        <result property="StoreDesc" column="store_describe"/>
+    </resultMap>
+    <select id="qryStore" parameterClass="HashMap" resultMap="qryStoreMap">
+        <![CDATA[
+SELECT 
+	store_name,store_grade,store_url,store_gourl,store_describe
+FROM `sp_store` where `store_name` like #LikeStoreName#
+        	]]>
+    </select>
+
+<!--     搜索商品 -->
+    <typeAlias alias="String" type="java.lang.String"/>
+    <typeAlias alias="HashMap" type="java.util.HashMap"/>
+    <resultMap id="qryGoodsMap" class="HashMap">
+        <result property="GoodsTitle" column="goods_title"/>
+        <result property="GoodsNewprice" column="goods_newprice"/>
+        <result property="GoodsUrl" column="goods_url"/>
+        <result property="GoodsPicUrl" column="goods_pic_url"/>
+        <result property="GoodsOldprice" column="goods_oldprice"/>
+        <result property="GoodsSize" column="Goods_size"/>
+        <result property="GoodsAmount" column="goods_amount"/>
+        <result property="GoodsEvaluate" column="goods_evaluate"/>
+        <result property="GoodsEvaluateNum" column="goods_evaluate_num"/>
+        <result property="GoodsSaleNum" column="goods_sale_num"/>
+        <result property="GoodsColor" column="goods_color"/>
+        <result property="GoodsName" column="goods_name"/>
+    </resultMap>
+    <select id="qrygoods" parameterClass="HashMap" resultMap="qryGoodsMap">
+        <![CDATA[
+SELECT 
+goods_title,
+goods_newprice,
+goods_url,
+goods_pic_url,
+goods_oldprice,
+goods_color,
+goods_size,
+goods_amount,
+goods_evaluate,
+goods_evaluate_num,
+goods_sale_num,
+goods_name
+ FROM `sp_goods` where `goods_name` like #LikeGoodsName#
+        	]]>
+    </select>
+    <resultMap id="selectForPhoneForMap" class="HashMap">
+        <result property="UserName" column="username"/>
+        <result property="PassWord" column="password"/>
+        <result property="Address" column="address"/>
+        <result property="Mobile" column="mobile"/>
+        <result property="Email" column="email"/>
+    </resultMap>
+    <select id="qryCustomerForPhone" parameterClass="HashMap" resultMap="selectForPhoneForMap">
+        <![CDATA[
+        select 
+        	username,password,address,mobile,email
+        from tb_customer
+        where mobile=#UserName#
+        	]]>
+    </select>
+    <resultMap id="selectCountForMap" class="HashMap">
+        <result property="ToTal" column="TOTAL"/>
+    </resultMap>
+    <select id="qryCustomerCount" parameterClass="HashMap" resultMap="selectCountForMap">
+        <![CDATA[
+        select 
+        	count(*) TOTAL
+        from tb_customer
+        where username=#UserName#
+        	]]>
+    </select>
+<!--     重置密码 -->
+        <resultMap id="restpassForMap" class="HashMap">
+        <result property="Email" column="email"/>
+        <result property="UserName" column="username"/>
+        <result property="Mobile" column="mobile"/>
+    </resultMap>
+    <select id="restpass" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where username=#UserName#
+        	]]>
+    </select>
+    <select id="restpassFemail" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where email=#UserName#
+        	]]>
+    </select>
+    <select id="restpassFphone" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where mobile=#UserName#
+        	]]>
+    </select>
+<!--     注册 -->
+    <insert id="insertCustomer" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_member(member_name,member_pwd,member_state,member_paypwd)
+        	values(#Mobile#,#PassWord#,#MemberState#,#MemberPaypwd#)
+        	]]>
+    </insert>
+    <insert id="insertCustomerkz" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_kz_member(member_id,member_grade,member_addtime,member_mobile)
+        	values(#MemberId#,#MemberGrade#,#MemberAddtime#,#Mobile#)
+        	]]>
+    </insert>
+        <resultMap id="selectForretMap" class="HashMap">
+        <result property="MemberId" column="member_id"/>
+    </resultMap>
+      <select id="selectForret" parameterClass="HashMap" resultMap="selectForretMap">
+        <![CDATA[
+        select 
+        	member_id
+        from sp_member
+        where member_name=#Mobile#
+        	]]>
+    </select>  
+<!-- ajax查询购物车     -->
+    	<resultMap id="selectAjaxCartMap" class="HashMap">
+        	<result property="MemberId" column="cart_me_id"/>
+        	<result property="TitleInfo" column="cart_titleinfo"/>
+        	<result property="CartPrice" column="cart_cartprice"/>
+        	<result property="CartPriceNum" column="cart_cartpricenum"/>
+        	<result property="CartPicUrl" column="cart_pic"/>
+   		</resultMap>
+       <select id="selectAjaxCart" parameterClass="HashMap" resultMap="selectAjaxCartMap">
+        <![CDATA[
+ 		SELECT *  FROM  sp_cartlist WHERE  cart_me_id=#MemberId# 
+        	]]>
+    </select>     
+  
+    
+    <update id="updateCustomer" parameterClass="HashMap">
+        <![CDATA[
+        update tb_customer
+     	set password=#PassWord#
+     	where username=#UserName#
+        	]]>
+    </update>
+</sqlMap>    

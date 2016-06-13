@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.org/dtds/sql-map-2.dtd">
+<sqlMap namespace="Admin">
+    <typeAlias alias="String" type="java.lang.String"/>
+    <typeAlias alias="HashMap" type="java.util.HashMap"/>    
+<!--   店铺基本信息查询   -->
+    <resultMap id="qrybaseInfoMap" class="HashMap">
+        <result property="SellerId" column="seller_id"/>
+        <result property="SellerName" column="seller_name"/>
+        <result property="SellerIdcard" column="seller_idcard"/>
+        <result property="SellerMobile" column="seller_mobile"/>
+        <result property="SellerPoint" column="seller_point"/>
+        <result property="SellerRetime" column="Seller_retime"/>
+        <result property="SellerQq" column="seller_qq"/>
+        <result property="SellerLogintime" column="seller_logintime"/>
+        <result property="SellerEmail" column="seller_email"/>
+        <result property="SellerTruename" column="seller_truename"/><!-- 负责人 -->
+        <result property="StoreDescribe" column="store_describe"/><!-- 负责人 -->
+        <result property="StoreUrl" column="store_url"/><!-- 图片连接 -->
+        <result property="StoreGourl" column="store_gourl"/><!-- 负责人 -->
+        <result property="StoreName" column="store_name"/><!-- 负责人 -->
+    </resultMap>
+    <select id="qrybaseInfo" parameterClass="String" resultMap="qrybaseInfoMap">
+        <![CDATA[
+			SELECT
+			a.seller_id,
+			a.seller_name,
+			seller_idcard,
+			seller_mobile,
+			seller_point,
+			seller_retime,
+			seller_qq,
+			seller_logintime,
+			seller_truename,
+			seller_email,
+			store_describe,
+			store_url,
+			store_gourl,
+			store_name
+			 FROM  sp_ex_seller a,sp_store b WHERE a.seller_id=b.seller_id and seller_name=#SellerName#
+        	]]>
+    </select>
+ <!-- END  店铺基本信息查询   -->   
+<!-- start  店铺基本信息修改   -->
+    <update id="updateSeller" parameterClass="HashMap">
+        <![CDATA[
+			update sp_ex_seller  SET 
+        	]]>
+        	   <dynamic>
+        	    <isNotEmpty prepend="" property="SellerIdcard">
+        	        seller_idcard=#SellerIdcard#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="," property="SellerMobile">
+        	        seller_mobile=#SellerMobile#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="," property="SellerEmail">
+        	       seller_email=#SellerEmail#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="," property="SellerTruename">
+        	        seller_truename=#SellerTruename#
+        	    </isNotEmpty>
+        	   </dynamic>
+        	   where seller_name=#SellerName#
+    </update>
+    <update id="updateStore" parameterClass="HashMap">
+        <![CDATA[
+			update sp_store  SET 
+        	]]>
+        	   <dynamic>
+        	    <isNotEmpty prepend="" property="StoreName">
+        	        store_name=#StoreName# 
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="," property="StoreDescribe">
+        	       store_describe=#StoreDescribe# 
+        	    </isNotEmpty>
+        	   </dynamic>   
+        	where  seller_id=#SellerId#
+    </update>
+<!-- END  店铺基本信息修改   -->  
+
+<!-- start  subAdmin登录   --> 
+    <resultMap id="qrySubLoginMap" class="HashMap">
+        <result property="SellerId" column="seller_id"/>
+        <result property="SellerName" column="seller_name"/>
+        <result property="SellerPwd" column="seller_pwd"/>
+    </resultMap>
+    <select id="qrySubLogin" parameterClass="HashMap" resultMap="qrySubLoginMap">
+        <![CDATA[
+        select 
+        	seller_id,seller_name,seller_pwd
+        from sp_seller
+        where seller_name=#UserName# and seller_pwd=#PassWord#
+        	]]>
+    </select>
+<!-- END  subAdmin登录    --> 
+
+
+
+  
+    
+    <resultMap id="selectForMap" class="HashMap">
+        <result property="MemberId" column="member_id"/>
+        <result property="MemberMobile" column="member_mobile"/>
+        <result property="MemberName" column="member_name"/>
+        <result property="MemberPoint" column="member_point"/>
+        <result property="MemberGrade" column="member_grade"/>
+        <result property="MemberEmail" column="member_email"/>
+        <result property="MemberTruename" column="member_truename"/>
+        <result property="MemberSex" column="member_sex"/>
+    </resultMap>
+    <select id="selectInfo" parameterClass="HashMap" resultMap="selectForMap">
+        <![CDATA[
+			SELECT * FROM sp_member sp1,sp_kz_member sp2  WHERE   sp1.member_id=sp2.member_id
+        	]]>
+        	<dynamic>
+        	    <isNotEmpty prepend="and" property="MemberName">
+        	        sp1.member_name=#MemberName#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="MemberMobile">
+        	         sp2.member_mobile=#MemberMobile#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="MemberTruename">
+        	         sp2.member_truename=#MemberTruename#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="MemberGrade">
+        	        sp2.member_grade=#MemberGrade#
+        	    </isNotEmpty>
+        	     <isLessThan prepend="and" property="MemberSex" compareValue="2">
+        	        sp2.member_sex=#MemberSex#
+        	    </isLessThan>
+				<!-- 排序方式  暂不处理-->
+        	    <isNotEmpty prepend="and" property="xxx">
+        	        order by sp1.member_id asc
+        	    </isNotEmpty>
+        	</dynamic>
+    </select>
+    <delete id="deletemember" parameterClass="String">
+        <![CDATA[
+        delete 
+        	sp_member,sp_kz_member  from sp_member left join sp_kz_member on 
+        	sp_member.member_id=sp_kz_member.member_id 
+        	where sp_member.member_name=#MemberName#
+        	]]>
+    </delete> 
+<!--  卖家    -->
+    <resultMap id="selectSellerForMap" class="HashMap">
+        <result property="SellerId" column="seller_id"/>
+        <result property="SellerName" column="seller_name"/>
+        <result property="SellerTruename" column="seller_truename"/>
+        <result property="SellerMobile" column="seller_mobile"/>
+        <result property="SellerProvince" column="seller_province"/>
+        <result property="SellerCity" column="seller_city"/>
+        <result property="SellerRetime" column="seller_retime"/>
+        <result property="SellerState" column="seller_state"/>
+        <result property="SellerPoint" column="seller_point"/>
+        <result property="StoreName" column="store_name"/>
+    </resultMap>    
+    <select id="qrySellerCount" parameterClass="HashMap" resultMap="selectSellerForMap">
+        <![CDATA[
+	SELECT 
+		a.seller_id,
+		a.seller_name,
+		seller_truename,
+		seller_mobile,
+		seller_province,
+		seller_city,
+		seller_retime,
+		seller_state,
+		seller_point,
+		store_name
+	 FROM  `sp_seller` a LEFT JOIN `sp_ex_seller` on a.`seller_id` =`sp_ex_seller`.`seller_id` LEFT JOIN `sp_store` on
+	`sp_ex_seller`.`seller_id` = `sp_store`.`seller_id` where a.seller_id=sp_ex_seller.seller_id
+        	]]>
+        	<dynamic>
+        	    <isNotEmpty prepend="and" property="SellerName">
+        	        a.seller_name=#SellerName#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="StoreName">
+        	        sp_store.store_name=#StoreName#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="MemberTruename">
+        	        sp_ex_seller.seller_truename=#MemberTruename#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="StartDate">
+        	        sp_ex_seller.seller_retime >= #StartDate#
+        	    </isNotEmpty>
+        	    <isNotEmpty prepend="and" property="EndDate">
+        	        #EndDate# >= sp_ex_seller.seller_retime
+        	    </isNotEmpty>
+        	    <isGreaterThan prepend="and" property="SellerState" compareValue="0">
+        	        sp_ex_seller.seller_state=#SellerState#
+        	    </isGreaterThan>
+        	    <isGreaterThan prepend="and" property="SellerGroup" compareValue="0">
+        	        a.seller_group_id=#SellerGroup#
+        	    </isGreaterThan>
+				<!-- 排序方式  -->
+        	    <isNull prepend="" property="xxx">
+        	       order by a.seller_id asc
+        	    </isNull>
+        	</dynamic>
+    </select>    
+    
+    
+    
+    
+    <resultMap id="selectForPhoneForMap" class="HashMap">
+        <result property="UserName" column="username"/>
+        <result property="PassWord" column="password"/>
+        <result property="Address" column="address"/>
+        <result property="Mobile" column="mobile"/>
+        <result property="Email" column="email"/>
+    </resultMap>
+    <select id="qryCustomerForPhone" parameterClass="HashMap" resultMap="selectForPhoneForMap">
+        <![CDATA[
+        select 
+        	username,password,address,mobile,email
+        from tb_customer
+        where mobile=#UserName#
+        	]]>
+    </select>
+    <resultMap id="selectCountForMap" class="HashMap">
+        <result property="ToTal" column="TOTAL"/>
+    </resultMap>
+    <select id="qryCustomerCount" parameterClass="HashMap" resultMap="selectCountForMap">
+        <![CDATA[
+        select 
+        	count(*) TOTAL
+        from tb_customer
+        where username=#UserName#
+        	]]>
+    </select>
+<!--     重置密码 -->
+        <resultMap id="restpassForMap" class="HashMap">
+        <result property="Email" column="email"/>
+        <result property="UserName" column="username"/>
+        <result property="Mobile" column="mobile"/>
+    </resultMap>
+    <select id="restpass" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where username=#UserName#
+        	]]>
+    </select>
+    <select id="restpassFemail" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where email=#UserName#
+        	]]>
+    </select>
+    <select id="restpassFphone" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where mobile=#UserName#
+        	]]>
+    </select>
+<!--     注册 -->
+    <insert id="insertCustomer" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into tb_customer(username,password,mobile)
+        	values(#UserName#,#PassWord#,#Mobile#)
+        	]]>
+    </insert>
+    <update id="updateCustomer" parameterClass="HashMap">
+        <![CDATA[
+        update tb_customer
+     	set password=#PassWord#
+     	where username=#UserName#
+        	]]>
+    </update>
+<!--  检测用户是否注册 -->
+    <resultMap id="qrySubAdminCountMap" class="HashMap">
+        <result property="ToTal" column="TOTAL"/>
+    </resultMap>
+    <select id="qrySubAdminCount" parameterClass="HashMap" resultMap="qrySubAdminCountMap">
+        <![CDATA[
+        select 
+        	count(*) TOTAL
+        from sp_seller
+        where seller_name=#UserName#
+        	]]>
+    </select>
+<!--     注册  1-->
+        <insert id="insertSubAdmin1" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_seller(seller_name,seller_pwd)
+        	values(#username#,#password#)
+        	]]>
+    </insert>
+    <!-- 卖家信息拓展表2 -->
+        <insert id="insertSubAdmin2" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_ex_seller(seller_name,seller_point,seller_retime,seller_state,seller_mobile,seller_id)
+        	values(#username#,'A',#retTime#,'1',#phone#,#SellerId#)
+        	]]>
+    </insert>
+    <!-- 店铺信息表3 -->
+        <insert id="insertSubAdmin3" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_store (store_grade,seller_id,store_gourl)
+        	values('A',#SellerId#,#StoreGourl#)
+        	]]>
+    </insert>
+    <!--  -->
+    <resultMap id="qrySubAdminIDMap" class="HashMap">
+        <result property="SellerId" column="seller_id"/>
+    </resultMap>
+    <select id="qrySubAdminID" parameterClass="HashMap" resultMap="qrySubAdminIDMap">
+        <![CDATA[
+        select 
+        	seller_id
+        from sp_seller
+        where seller_name=#username#
+        	]]>
+    </select>
+<!--     登录更新日期 -->
+    <update id="updateLogin" parameterClass="HashMap">
+        <![CDATA[
+        update sp_ex_seller
+     	set seller_logintime=#loginTime#
+     	where seller_name=#UserName#
+        	]]>
+    </update>
+<!--     登录卖家Url图片 -->
+    <update id="updateUrl" parameterClass="HashMap">
+        <![CDATA[
+        update sp_store 
+     	set store_url =#StoreUrl#
+     	where seller_id=#SellerId#
+        	]]>
+    </update>
+</sqlMap>    

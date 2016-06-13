@@ -1,0 +1,46 @@
+#header_container {
+	min-width: 960px;
+	background: #fff;
+}
+
+#header_body {
+	height: 85px;
+	width: 960px;
+	margin: 0 auto;
+}
+
+
+
+/* .body_main { */
+	/* 	margin: 100px auto; */
+	/* 	line-height: 1.5; */
+	/* 	width: 965px; */
+	/* 	margin-top: 50px; */
+	
+/* } */
+
+.body_container {
+	line-height: 1.5;
+}
+
+#footer_container {
+	overflow: hidden;
+	border-top: 1px solid #ccc;
+	background: #fff;
+	font-family: "微软雅黑", tahoma, arial, ’Hiragino Sans GB ',’宋体b8b\4f53',
+		sans-serif;
+	position: relative;
+	bottom: -1px;
+}
+
+.footer_body {
+	line-height: 20px;
+	padding-bottom: 80px;
+	color: #ccc;
+	background: #fff;
+	color: #000;
+	text-align: center;
+	width: 1090px;
+	margin: 0 auto;
+	overflow: hidden;
+}

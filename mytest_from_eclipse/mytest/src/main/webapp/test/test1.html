@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>首页</title>
+<link rel="stylesheet" type="text/css" href="styles/index.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/test.js"></script>
+<script src="js/testforjs.js"></script>
+
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet"
+	href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet"
+	href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body style="height: 100%;">
+	<form action="">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">主页</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li><a href="#">当前访客身份：</a></li>
+					<li><a href="#">BB菜强</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 目录 <b class="caret"></b>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">文本转html</a></li>
+							<li><a href="#2">单选框，复选框</a></li>
+							<li><a href="#3">angluer-js</a></li>
+							<li><a href="#4">springmvc-mybtis</a></li>
+							<!-- 							<li class="divider"></li> -->
+							<!-- 							<li><a href="#5">分离的链接</a></li> -->
+							<!-- 							<li class="divider"></li> -->
+							<!-- 							<li><a href="#6">另一个分离的链接</a></li> -->
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-heading">博客分类</div>
+						<div class="panel-body"><a href="fojava.html" target="iframe">添加</a></div>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="panel panel-info">
+						<div class="panel-heading" id="title"></div>
+						<div class="panel-body">
+							<iframe id="iframe" src="fojava1.html" scrolling="auto"
+								style="width: 100%;" frameborder="0"> </iframe>
+						</div>
+						<!-- 						<div class="panel-body">Panel content</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<footer>
+			<div style="text-align: center;">321312</div>
+			<div style="text-align: center;">321312</div>
+			<div style="text-align: center;">321312</div>
+			<div>3213123</div>
+		</footer>
+	</form>
+</body>
+<script type="text/javascript">
+var flag=false;
+/**
+ * key: 
+ * value:需要显示的值
+ */
+var StatusList =       [{key:"forxml2.html",value:"XML、JSON及其解析(下)"}, {key:"spring.html",value:"springmvc"}, {key:"foran-js.html",value:"单选框，复选框"}, {key:"fojava1.html",value:"Java 反射(上)"}, {key:"fojava3.html",value:"Java 反射(下)"}, {key:"fojs.html",value:"单选框，复选框"}, {key:"fojava2.html",value:"Java 反射(中)"}, {key:"forxml.html",value:"XML、JSON及其解析"}, {key:"forxml1.html",value:"XML、JSON及其解析(中)"}, {key:"jquery.html",value:"jquery"}, {key:"fojava.html",value:"Java 反射(上)"}, {key:"jsprototype.html",value:"prototype"}];
+//操作StatusList
+function initStatus(selectlist){
+	   var length=selectlist.length;
+	     for(var i = 0; i < length; i++) {debugger;
+	          var everyselect = selectlist[i];
+	          var key = everyselect.key;
+	          var value = everyselect.value;
+	          var mydiv='<div class="panel-body"><a  onclick="changer('+"'"+key+"',"+"'"+value+"'"+')" href="#'+key+'">'+value+'</a></div>';
+
+	          var select=$(".container .panel-default .panel-heading").after(mydiv);
+	    }
+	     flag=true;
+}
+
+function changer(key,value){
+		$("#iframe").attr("src", key);
+		$("#title").html(value);
+}
+	$(function() {	
+		if(!flag){
+			initStatus(StatusList);
+		}
+		$("a[href='#1']").click(function(){
+			$("#iframe").attr("src", "fojava.html");
+			$("#title").html("文本转html");
+		});
+		$("a[href='#2']").click(function(){
+			$("#iframe").attr("src", "fojs.html");
+			$("#title").html("单选框，复选框");
+		});
+		$("a[href='#3']").click(function(){
+			$("#iframe").attr("src", "foran-js.html");
+			$("#title").html("angluer-js");
+		});
+		$("a[href='#4']").click(function(){
+			$("#iframe").attr("src", "spring.html");
+			$("#title").html("springmvc-mybtis");
+		});
+		
+	
+
+	})
+
+
+	
+	
+</script>
+<script type="text/javascript">
+  // 计算页面的实际高度，iframe自适应会用到
+var ifr = document.getElementById('iframe')
+ifr.onload = function() {
+	 autoheight();
+}
+
+function autoheight(){
+	debugger;
+	
+	      var iDoc = ifr.contentDocument || ifr.document;
+	      var height = calcPageHeight(iDoc);
+// 	       alert(height);
+		$("#iframe").css("min-height", height + 'px');
+	//       ifr.style.height = height + 'px';
+}
+
+  function calcPageHeight(doc) {
+	      var cHeight = Math.min(doc.body.clientHeight, doc.documentElement.clientHeight);
+	      var sHeight = Math.min(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+	      var height  = Math.min(cHeight, sHeight);
+	      return height;
+	  }
+</script>
+</html>

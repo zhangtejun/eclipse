@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+  <meta name="format-detection" content="telephone=no"> 
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --> 
+  <title>首页</title> 
+  <script src="js/jquery.min.js"></script> 
+  <!-- 新 Bootstrap 核心 CSS 文件 --> 
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+  <!-- 可选的Bootstrap主题文件（一般不用引入） --> 
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> 
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 --> 
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> 
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 --> 
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+ </head> 
+ <body> 
+  <div>
+   <strong id="zht">jquery</strong>
+  </div> 
+  <div id="zht1">
+   <p>JS中的phototype是JS中比较难理解的一个部分</p> 
+   <p>&nbsp;</p> 
+   <p>本文基于下面几个知识点:</p> 
+   <p>&nbsp;</p> 
+   <p><span style="font-size: 14pt;">1 原型法设计模式</span></p> 
+   <p>在.Net中可以使用clone()来实现原型法</p> 
+   <p>原型法的主要思想是，现在有1个类A,我想要创建一个类B,这个类是以A为原型的,并且能进行扩展。我们称B的原型为A。</p> 
+   <p>&nbsp;</p> 
+   <p><span style="font-size: 14pt;">2 javascript的方法可以分为三类：</span></p> 
+   <p>a 类方法</p> 
+   <p>b 对象方法</p> 
+   <p>c 原型方法</p> 
+   <p>例子：</p> 
+   <div class="cnblogs_Highlighter"> 
+    <div class="cnblogs_Highlighter"> 
+     <pre class="cnblogs_code"> 
+      <div> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">&nbsp;People(name)<br>{<br></span> 
+       <span style="color: #0000ff;">&nbsp; this</span> 
+       <span style="color: #000000;">.name</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #000000;">name;<br></span> 
+       <span style="color: #008000;">&nbsp; //</span> 
+       <span style="color: #008000;">对象方法</span> 
+       <span style="color: #008000;"><br></span> 
+       <span style="color: #0000ff;">&nbsp; this</span> 
+       <span style="color: #000000;">.Introduce</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">(){<br>&nbsp; &nbsp; alert(</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">My&nbsp;name&nbsp;is&nbsp;</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">+</span> 
+       <span style="color: #0000ff;">this</span> 
+       <span style="color: #000000;">.name);<br>&nbsp; }<br>}<br></span> 
+       <span style="color: #008000;">//</span> 
+       <span style="color: #008000;">类方法</span> 
+       <span style="color: #008000;"><br></span> 
+       <span style="color: #000000;">People.Run</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">(){<br>&nbsp; alert(</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">I&nbsp;can&nbsp;run</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">);<br>}<br></span> 
+       <span style="color: #008000;">//</span> 
+       <span style="color: #008000;">原型方法</span> 
+       <span style="color: #008000;"><br></span> 
+       <span style="color: #000000;">People.prototype.IntroduceChinese</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">(){<br>&nbsp; alert(</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">我的名字是</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">+</span> 
+       <span style="color: #0000ff;">this</span> 
+       <span style="color: #000000;">.name);<br>}<br><br>&nbsp;<br><br></span> 
+       <span style="color: #008000;">//</span> 
+       <span style="color: #008000;">测试</span> 
+       <span style="color: #008000;"><br></span> 
+       <span style="color: #000000;"><br></span> 
+       <span style="color: #0000ff;">var</span> 
+       <span style="color: #000000;">&nbsp;p1</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #0000ff;">new</span> 
+       <span style="color: #000000;">&nbsp;People(</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">Windking</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">);<br><br>p1.Introduce();<br><br>People.Run();<br><br>p1.IntroduceChinese(); <br></span> 
+      </div> 
+     </pre> 
+     <p>&nbsp; </p> 
+     <p><span style="font-size: 14pt;">3 obj1.func.call(obj)方法 </span></p> 
+     <p>意思是将obj看成obj1,调用func方法 </p> 
+     <p>&nbsp; </p> 
+     <p>&nbsp;</p> 
+     <p>好了，下面一个一个问题解决： </p> 
+     <p>&nbsp;</p> 
+     <p><span style="font-size: 14pt;">prototype是什么含义？ </span></p> 
+     <p>&nbsp;</p> 
+     <p>javascript中的每个对象都有prototype属性，Javascript中对象的prototype属性的解释是：返回对象类型原型的引用。 </p> 
+     <p>A.prototype = new B(); </p> 
+     <p>理解prototype不应把它和继承混淆。A的prototype为B的一个实例，可以理解A将B中的方法和属性全部克隆了一遍。A能使用B的方法和属性。这里强调的是克隆而不是继承。可以出现这种情况：A的prototype是B的实例，同时B的prototype也是A的实例。 </p> 
+     <p>&nbsp; </p> 
+     <p>先看一个实验的例子： </p> 
+     <br> 
+     <pre class="cnblogs_code"> 
+      <div> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">&nbsp;baseClass()<br>{<br></span> 
+       <span style="color: #0000ff;">&nbsp; this</span> 
+       <span style="color: #000000;">.showMsg&nbsp;</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #000000;">&nbsp;</span> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">()<br>&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">baseClass::showMsg</span> 
+       <span style="color: #000000;">"</span> 
+       <span style="color: #000000;">);&nbsp;&nbsp;&nbsp;<br>&nbsp; }<br>}<br><br></span> 
+       <span style="color: #0000ff;">function</span> 
+       <span style="color: #000000;">&nbsp;extendClass()<br>{<br>}<br><br>extendClass.prototype&nbsp;</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #000000;">&nbsp;</span> 
+       <span style="color: #0000ff;">new</span> 
+       <span style="color: #000000;">&nbsp;baseClass();<br>var instance&nbsp;</span> 
+       <span style="color: #000000;">=</span> 
+       <span style="color: #000000;">&nbsp;</span> 
+       <span style="color: #0000ff;">new</span> 
+       <span style="color: #000000;">&nbsp;extendClass();<br>instance.showMsg();&nbsp;</span> 
+       <span style="color: #008000;">//</span> 
+       <span style="color: #008000;">&nbsp;显示baseClass::showMsg</span> 
+      </div> 
+     </div> 
+    </pre> 
+    <p>我们首先定义了baseClass类，然后我们要定义extentClass，但是我们打算以baseClass的一个实例为原型，来克隆的extendClass也同时包含showMsg这个对象方法。</p> 
+    <p>extendClass.prototype = new baseClass()就可以阅读为：extendClass是以baseClass的一个实例为原型克隆创建的。</p> 
+    <p>&nbsp;</p> 
+    <p>那么就会有一个问题，<span style="font-size: 14pt;">如果extendClass中本身包含有一个与baseClass的方法同名的方法会怎么样？</span></p> 
+    <p>下面是扩展实验2：</p> 
+    <br> 
+    <pre class="cnblogs_code"> 
+     <div> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">&nbsp;baseClass()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+      <span style="color: #0000ff;">this</span> 
+      <span style="color: #000000;">.showMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">()<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">baseClass::showMsg</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">);&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br><br></span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">&nbsp;extendClass()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+      <span style="color: #0000ff;">this</span> 
+      <span style="color: #000000;">.showMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">&nbsp;()<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">extendClass::showMsg</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br><br>extendClass.prototype&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;baseClass();<br>var instance&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;extendClass();<br><br>instance.showMsg();</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示extendClass::showMsg</span> 
+     </div> 
+    </pre> 
+    <p>&nbsp;</p> 
+    <p>实验证明：函数运行时会先去本体的函数中去找，如果找到则运行，找不到则去prototype中寻找函数。或者可以理解为prototype不会克隆同名函数。</p> 
+    <p>&nbsp;</p> 
+    <p>那么又会有一个新的问题：</p> 
+    <p><span style="font-size: 14pt;">如果我想使用extendClass的一个实例instance调用baseClass的对象方法showMsg怎么办？</span></p> 
+    <p>&nbsp;</p> 
+    <p>答案是可以使用call: </p> 
+    <br> 
+    <pre class="cnblogs_code"> 
+     <div> 
+      <span style="color: #000000;">extendClass.prototype&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;baseClass();<br>var instance&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;extendClass();<br><br><br></span> 
+      <span style="color: #0000ff;">var</span> 
+      <span style="color: #000000;">&nbsp;baseinstance&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;baseClass();<br>baseinstance.showMsg.call(instance);</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示baseClass::showMsg</span> 
+     </div> 
+    </pre> 
+    <p>&nbsp;</p> 
+    <p>这里的baseinstance.showMsg.call(instance);阅读为“将instance当做baseinstance来调用，调用它的对象方法showMsg”</p> 
+    <p>好了，这里可能有人会问，为什么不用baseClass.showMsg.call(instance);</p> 
+    <p>这就是对象方法和类方法的区别，我们想调用的是baseClass的对象方法</p> 
+    <p>&nbsp;</p> 
+    <p><span style="font-size: 14pt;">最后，下面这个代码如果理解清晰，那么这篇文章说的就已经理解了：</span></p> 
+    <p>&nbsp;</p> 
+    <br> 
+    <pre class="cnblogs_code"> 
+     <div> 
+      <span style="color: #000000;">&lt;</span> 
+      <span style="color: #000000;">script&nbsp;type</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">text/javascript</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">&gt;</span> 
+      <span style="color: #000000;"><br><br></span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">&nbsp;baseClass()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+      <span style="color: #0000ff;">this</span> 
+      <span style="color: #000000;">.showMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">()<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">baseClass::showMsg</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">);&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+      <span style="color: #0000ff;">this</span> 
+      <span style="color: #000000;">.baseShowMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">()<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">baseClass::baseShowMsg</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br>baseClass.showMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">baseClass::showMsg&nbsp;static</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">);<br>}<br><br></span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">&nbsp;extendClass()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+      <span style="color: #0000ff;">this</span> 
+      <span style="color: #000000;">.showMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">&nbsp;()<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">extendClass::showMsg</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br>extendClass.showMsg&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">function</span> 
+      <span style="color: #000000;">()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;alert(</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">extendClass::showMsg&nbsp;static</span> 
+      <span style="color: #000000;">"</span> 
+      <span style="color: #000000;">)<br>}<br><br>extendClass.prototype&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;baseClass();<br>var instance&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;extendClass();<br><br>instance.showMsg();&nbsp;</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示extendClass::showMsg</span> 
+      <span style="color: #008000;"><br></span> 
+      <span style="color: #000000;">instance.baseShowMsg();&nbsp;</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示baseClass::baseShowMsg</span> 
+      <span style="color: #008000;"><br></span> 
+      <span style="color: #000000;">instance.showMsg();&nbsp;</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示extendClass::showMsg</span> 
+      <span style="color: #008000;"><br></span> 
+      <span style="color: #000000;"><br>baseClass.showMsg.call(instance);</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示baseClass::showMsg&nbsp;static</span> 
+      <span style="color: #008000;"><br></span> 
+      <span style="color: #000000;"><br></span> 
+      <span style="color: #0000ff;">var</span> 
+      <span style="color: #000000;">&nbsp;baseinstance&nbsp;</span> 
+      <span style="color: #000000;">=</span> 
+      <span style="color: #000000;">&nbsp;</span> 
+      <span style="color: #0000ff;">new</span> 
+      <span style="color: #000000;">&nbsp;baseClass();<br>baseinstance.showMsg.call(instance);</span> 
+      <span style="color: #008000;">//</span> 
+      <span style="color: #008000;">显示baseClass::showMsg</span> 
+      <span style="color: #008000;"><br></span> 
+      <span style="color: #000000;"><br></span> 
+      <span style="color: #000000;">&lt;</span> 
+      <span style="color: #000000;">/</span> 
+      <span style="color: #000000;">script&gt;</span> 
+     </div> 
+    </pre> 
+    <p>&nbsp;</p> 
+   </div>
+  </div>  
+  <script type="text/javascript">
+	/*
+	 * 我们设置2个盒子一个限制最小高度，一个设置限制最大高度，最小高度限制的对象如果内容不多不会超出限制最小高度，此时对象会显示最小高度限制值，如果内容比较多超过了最小高度限制能装下单，此时对象会自动增高。而后者最大高度max-height限制，内容少时候不会有什么区别，但内容多时候，而最大高度限制也装不下时候，内容会超出最大高度限制，但对象本身还是最大高度，这样就出现内容溢出超出对象盒子，我们即可使用css overflow属性隐藏溢出内容。
+	 */
+	// 计算页面的实际高度，iframe自适应会用到
+	function calcPageHeight(doc) {
+		var cHeight = Math.max(doc.body.clientHeight,
+				doc.documentElement.clientHeight)
+		var sHeight = Math.max(doc.body.scrollHeight,
+				doc.documentElement.scrollHeight)
+		var height = Math.max(cHeight, sHeight)
+		return height
+	}
+	window.onload = function() {
+		debugger
+		var height = calcPageHeight(document)
+		parent.$("#iframe").css("min-height", height + 'px');
+		//         parent.document.getElementById('iframe').style.(max-height) = height + 'px'     
+	}
+	window.parent.$("#title").html($("#zht").html());
+ </script> 
+ </body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.org/dtds/sql-map-2.dtd">
+<sqlMap namespace="Hello">
+    <typeAlias alias="String" type="java.lang.String"/>
+    <typeAlias alias="HashMap" type="java.util.HashMap"/>
+    <resultMap id="selectForMap" class="HashMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="hello" parameterClass="java.lang.String" resultMap="selectForMap">
+        <![CDATA[
+        select 
+        	id,
+        	name
+        from items
+        	]]>
+    </select>
+</sqlMap>    

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+ 	<package name="shop.admin" extends="shop-default">
+	   	<!-- 配置拦截器 -->
+		<action name="admin">
+            <result name="success">/WEB-INF/pages/admin/admin.jsp</result>
+        </action> 	   
+		<action name="indexSub">
+            <result name="success">/WEB-INF/pages/subAdmin/subAdmin.jsp</result>
+        </action> 	   
+<!-- 		<action name="admin_member"> -->
+<!--             <result name="success">/WEB-INF/pages/admin/admin_member.jsp</result> -->
+<!--         </action> 	    -->
+<!--  	 入驻页面 -->
+<!-- 		<action name="admin_enter"> -->
+<!--             <result name="success">/WEB-INF/pages/admin/admin_enter.jsp</result> -->
+<!--         </action> 	    -->
+		<action name="admin_tuig">
+            <result name="success">/WEB-INF/pages/admin/admin_tuig.jsp</result>
+        </action> 	   
+		<action name="admin_order">
+            <result name="success">/WEB-INF/pages/admin/admin_order.jsp</result>
+        </action> 	   
+		<action name="admin_capital">
+            <result name="success">/WEB-INF/pages/admin/admin_capital.jsp</result>
+        </action> 	   
+		<action name="admin_system">
+            <result name="success">/WEB-INF/pages/admin/admin_System.jsp</result>
+        </action> 	   
+		<action name="admin_sreport">
+            <result name="success">/WEB-INF/pages/admin/admin_SellReport.jsp</result>
+        </action> 	   
+		<action name="admin_goods">
+            <result name="success">/WEB-INF/pages/admin/admin_Goods.jsp</result>
+        </action> 	   
+		<action name="admin_market">
+            <result name="success">/WEB-INF/pages/admin/admin_Market.jsp</result>
+        </action> 
+        <action name="admin_*" class="com.shop.action.user.AdminAction" method="{1}">
+            <result name="success">/WEB-INF/pages/admin/admin_member.jsp</result>
+            <result name="enter_success">/WEB-INF/pages/admin/admin_enter.jsp</result>
+			<result name="top">/WEB-INF/pages/admin/top.jsp</result>
+            <result name="left">/WEB-INF/pages/admin/left.jsp</result>
+            <result name="right">/WEB-INF/pages/admin/right.jsp</result>
+            <result name="input">/WEB-INF/pages/user/customer_login.jsp</result>
+<!--             <interceptor-ref name="adminDefaultStack"/> -->
+		</action>	   
+<!-- 		注册提交 -->
+		<action name="SubRet" class="com.shop.action.user.AdminSubRetAction">
+            <result name="success">/WEB-INF/pages/subAdmin/subAdminLogin.jsp</result>
+            <result name="error">/WEB-INF/pages/subAdmin/subAdminRegister.jsp</result>
+        </action> 	
+        <!-- 		注册 -->  
+		<action name="SubRetPre">
+            <result name="success">/WEB-INF/pages/subAdmin/subAdminRegister.jsp</result>
+        </action> 	  
+        <action name="adminSub_*" class="com.shop.action.user.AdminSubAction" method="{1}">
+			<result name="subadminLogin">/WEB-INF/pages/subAdmin/subAdminLogin.jsp</result>
+            <result name="BaseInfo">/WEB-INF/pages/subAdmin/subAdmin.jsp</result>
+            <result name="Goods">/WEB-INF/pages/subAdmin/subAdmin_Goods.jsp</result>
+            <result name="GoodsAdd">/WEB-INF/pages/subAdmin/subAdmin_GoodsAdd.jsp</result>
+			<result name="index">/WEB-INF/pages/admin/top.jsp</result>
+            <result name="left">/WEB-INF/pages/admin/left.jsp</result>
+            <result name="right">/WEB-INF/pages/admin/right.jsp</result>
+            <result name="input">/WEB-INF/pages/user/customer_login.jsp</result>
+			<interceptor-ref name="customerDefaultStack"/>
+		</action>	   
+ 	 </package>  
+    
+ 
+ 	<package name="ajax" extends="json-default">
+ 	    	  <!-- 配置拦截器 -->
+		<interceptors>
+		<!-- 验证用户登录的拦截器 -->
+		<!-- 先定义拦截器 -->
+		<interceptor name="loginInterceptor" class="com.shop.action.interceptor.CustomerLoginInteceptor"/>
+		<interceptor-stack name="customerDefaultStack">
+		<!-- 拦截器一 -->
+		<interceptor-ref name="loginInterceptor"/>
+		<!-- 拦截器2 引用系统默认的拦截器 -->
+		<interceptor-ref name="defaultStack"/>
+		</interceptor-stack>
+		</interceptors>
+<!-- 		<action name="ResendMobilePwd" class="com.shop.action.ResendMobilePwd"> -->
+<!-- 			<result type="json"></result> -->
+<!-- 		</action> -->
+		<action name="urlpic" class="com.shop.updown.UploadAction">
+			<result type="json"></result>
+			<param name="root">result</param>
+			<param name="excludeProperties">  
+                    file
+                </param> 
+                <interceptor-ref name="customerDefaultStack"/>
+        </action> 
+<!-- 		<action name="CartInfo" class="com.shop.action.CartInfoAction"> -->
+<!-- 			<result type="json"></result> -->
+<!-- 			<param name="root">result</param> -->
+<!-- 		</action> -->
+	</package>	
+
+ 		
+    
+	<!-- 后台管理 -->
+<!-- 	<package name="shop.admin" namespace="/admin" extends="shop-default"> -->
+		<!-- 配置拦截器 -->
+<!-- 		<interceptors> -->
+			<!-- 验证用户登录的拦截器 -->
+<!-- 			<interceptor name="loginInterceptor" class="com.lyq.action.interceptor.UserLoginInterceptor"/> -->
+<!-- 			<interceptor-stack name="adminDefaultStack"> -->
+<!-- 				<interceptor-ref name="loginInterceptor"/> -->
+<!--     			<interceptor-ref name="defaultStack"/> -->
+<!-- 			</interceptor-stack> -->
+<!-- 		</interceptors> -->
+<!-- 		<action name="admin_*" class="indexAction" method="{1}"> -->
+<!-- 			<result name="top">/WEB-INF/pages/admin/top.jsp</result> -->
+<!--             <result name="left">/WEB-INF/pages/admin/left.jsp</result> -->
+<!--             <result name="right">/WEB-INF/pages/admin/right.jsp</result> -->
+<!--             <interceptor-ref name="adminDefaultStack"/> -->
+<!-- 		</action> -->
+<!-- 	</package> -->
+<!-- 	<package name="shop.admin.user" namespace="/admin/user" extends="shop-default"> -->
+<!-- 		<action name="user_*" method="{1}" class="userAction"></action> -->
+<!-- 	</package> -->
+    <!-- 类别管理 -->
+<!--     <package name="shop.admin.category" namespace="/admin/product" extends="shop.admin"> -->
+<!-- 		<action name="category_*" method="{1}" class="productCategoryAction"> -->
+<!-- 			<result name="list">/WEB-INF/pages/admin/product/category_list.jsp</result> -->
+<!-- 			<result name="input">/WEB-INF/pages/admin/product/category_add.jsp</result> -->
+<!-- 			<result name="edit">/WEB-INF/pages/admin/product/category_edit.jsp</result> -->
+<!-- 			<interceptor-ref name="adminDefaultStack"/> -->
+<!-- 		</action>	 -->
+<!--     </package> -->
+    <!-- 商品管理 -->
+<!--     <package name="shop.admin.product" namespace="/admin/product" extends="shop.admin"> -->
+<!-- 		<action name="product_*" method="{1}" class="productAction"> -->
+<!-- 			<result name="list">/WEB-INF/pages/admin/product/product_list.jsp</result> -->
+<!-- 			<result name="input">/WEB-INF/pages/admin/product/product_add.jsp</result> -->
+<!-- 			<result name="edit">/WEB-INF/pages/admin/product/product_edit.jsp</result> -->
+<!-- 			<interceptor-ref name="adminDefaultStack"/> -->
+<!-- 		</action>	 -->
+<!--     </package> -->
+    <!-- 订单管理 -->
+<!--     <package name="shop.admin.order" namespace="/admin/product" extends="shop.admin"> -->
+<!-- 		<action name="order_*" method="{1}" class="orderAction"> -->
+<!-- 			<result name="list">/WEB-INF/pages/admin/order/order_list.jsp</result> -->
+<!-- 			<result name="select">/WEB-INF/pages/admin/order/order_select.jsp</result> -->
+<!-- 			<result name="query">/WEB-INF/pages/admin/order/order_query.jsp</result> -->
+<!-- 			<result name="update">/WEB-INF/pages/admin/order/order_update_success.jsp</result> -->
+<!-- 			<interceptor-ref name="adminDefaultStack"/> -->
+<!-- 		</action>	 -->
+<!--     </package> -->
+</struts>

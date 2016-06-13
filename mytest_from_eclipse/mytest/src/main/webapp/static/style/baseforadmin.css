@@ -1,0 +1,17 @@
+.cspt {
+	cursor: pointer;
+}
+
+.row1 {
+	padding-bottom: 10px;
+}
+
+.Right {
+	text-align: right;
+}
+.Dnone{
+	visibility: hidden!important;
+}
+.Dblock{
+	visibility: visible!important;
+}

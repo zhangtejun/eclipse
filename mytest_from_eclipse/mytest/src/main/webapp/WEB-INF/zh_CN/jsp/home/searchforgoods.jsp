@@ -1,0 +1,932 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+	isELIgnored="true"%>
+<html>
+<head>
+<%@ include file="/WEB-INF/zh_CN/common/meta.jsp"%>
+<title>Insert title here</title>
+<%@ include file="/WEB-INF/zh_CN/common/head.jsp"%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+.aa {
+	background: rgb(237, 20, 91);
+	color: #fff;
+}
+</style>
+</head>
+<body style="width: 1349px">
+	<form action="login1.do" name="form1" id="" method="post">
+		<input type="hidden" name="A" value="1" /> <input type="hidden"
+			name="B" value="2" /> <input type="hidden" name="C" value="3" />
+	</form>
+	<form name="form2" method="post">
+		<input type="hidden" name="A" value="1" /> <input type="hidden"
+			name="B" value="2" /> <input type="hidden" name="C" value="3" />
+	</form>
+	<div class="header_title">
+		<div class="header_top">
+			<div class="header_top_box">
+				<!--login-->
+				<sh:userPropertyCheck operator="=false" propertyName="logined">
+					<ul class="header_top_left">
+						<li>欢迎来到XX！</li>
+						<li><a href="customer_login.do" rel="nofollow">请登录</a></li>
+						<li><a href="customer_rset.do" rel="nofollow">快速注册</a></li>
+						<li><a href="#"><img src="./static/images/fastpay.png"
+								style="margin-left: -18px; margin-top: 4px;"></a></li>
+						<li><a href="#"><img src="./static/images/qq_login.png"
+								style="margin-left: -18px; margin-top: 6px;"></a></li>
+					</ul>
+				</sh:userPropertyCheck>
+				<sh:userPropertyCheck operator="=true" propertyName="logined">
+					<ul class="header_top_left">
+						<li>欢迎来到XX！</li>
+						<li><a href="#" rel="nofollow"><c:out value="${UName}" /></a></li>
+						<li><a href="customer_logout.do" onclick="logout()">退出1</a></li>
+					</ul>
+				</sh:userPropertyCheck>
+				<ul class="header_top_right style="padding-right: 80px;">
+					<li><a href="#">正品保证</a></li>
+					<li><a href="#">七天退换</a></li>
+					<li><a href="#">收藏本站</a><s class="icon_favorite"></s></li>
+					<li><a href="#">我的订单</a></li>
+					<li><a href="#">商家入驻</a></li>
+				</ul>
+				<!--login end-->
+
+			</div>
+		</div>
+	</div>
+
+	<div class="header">
+		<div class="logo" id="logo_name">
+			<span>XX商城</span>
+		</div>
+		<div class="header_searchbox">
+			<form action="" method="get"
+				onsubmit="return mall_search_validate(this)"
+				style="margin: 0; padding: 0;">
+				<input name="filter" type="hidden" value="0-11-1"> <input
+					name="search" type="text" class="header_search_input"
+					id="search_input" default_val="补水" autocomplete="off"
+					x-webkit-speech="" x-webkit-grammar="builtin:search" lang="zh">
+				<input name="from" type="hidden"> <input name="cat"
+					type="hidden">
+				<button type="submit" class="header_search_btn">搜索</button>
+			</form>
+			<div class="search_result_pop_a" id="top_out_search_pop_div"></div>
+
+			<ul class="hot_word">
+				<li><a href="#" target="">热门搜索：</a></li>
+				<li><a target="" href="#">面膜</a><s class="line"></s></li>
+				<li><a target="" href="#">洗面奶</a><s class="line"></s></li>
+				<li><a target="" href="#">补水</a><s class="line"></s></li>
+				<li><a target="" href="#">香水</a><s class="line"></s></li>
+				<li><a target="" href="#">眼霜</a><s class="line"></s></li>
+				<li><a target="" href="#">口红</a><s class="line"></s></li>
+				<li><a target="" href="#">护肤套装</a></li>
+			</ul>
+		</div>
+		<!--     start 购物车 -->
+						<!--     start 购物车 -->
+		<div id="shopping_cart" class="shopping_cart"
+			onmouseover="show_cart()" onmouseout="hidden_cart()" style="margin-top: 20px;">
+			<a id="cart" class="cart_link" href="#" rel="nofollow"> 
+			<img src="http://p0.jmstatic.com/assets/cart.gif" width="28" height="28"class="cart_gif" style="float: left"> 
+			<div style="float: left"><span class="text">去购物车结算</span> <span
+				class="num" style="display: none;"></span> <s
+				class="icon_arrow_down"></s></div>
+			</a>
+
+			<div class="cart_content" >
+				<i class="cart-icons"></i>
+				<div class="cart_content_null" id="cart_content" style="display: none;">
+					购物车中还没有商品，快去挑选心爱的商品吧！
+				</div>
+			<div class="cart_content_all" style="display: none;">
+				<div class="form-group" id="cartTip11">
+					<div class="col-12">
+						<div class="input-value textCenter fontred" id="cartTip">
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+					<div class="cart_content_center" id="cart_id"></div>
+					<div class="con_all">
+						<div class="price_whole wd100" style="text-align: left;">
+							<span>共<span class="num_all"></span>件商品
+							</span>
+						</div>
+						<div>
+						<div class="fll">
+							<span class="price_gongji">共计<em>￥</em><span
+								class="total_price"></span></span>
+						</div>
+						<div class="fll"><a href="#" class="cart_btn"rel="nofollow">去购物车结算</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="header_bottom">
+		<div class="channel_nav_box">
+
+			<div class="channel_nav_list_wrap">
+				<!-- 			left <ul/>标签 -->
+				<ul class="channel_nav_list">
+					<li class="current" style="padding-right: 60px;"
+						onmouseover="show_current()" onmouseout="hidden_current()"><span
+						style="padding-left: 30px;">全部商品分类</span><span>
+							<div id="show_hidd"
+								style="position: absolute; left: 0px; background-color: rgb(224, 224, 224) !important; top: 38px; display: none; border: 1px solid red; width: 190px; min-height: 350px; z-index: 10;">
+								<ul class="shop_List">
+									<div class="clear"></div>
+									<li class="woman shop_line b_g_c" id="woman_id"><i
+										class="i"></i>女鞋
+										<ul class="small_shop">
+											<li><a target="_blank" title="单鞋" href="#">单鞋</a></li>
+											<li><a target="_blank" title="短靴" href="#">短靴</a></li>
+											<li><a target="_blank" title="马丁靴" href="#">马丁靴</a></li>
+											<li><a target="_blank" title="长靴" href="#">长靴</a></li>
+											<li><a target="_blank" title="凉拖" href="#">凉拖</a></li>
+											<li><a target="_blank" title="凉鞋" href="#">凉鞋</a></li>
+											<div class="right_shop_woman"></div>
+											<div class="RightCata">
+												<div>
+													品牌：
+													<ul>
+														<li><a target="_self" href="#">啸行安</a></li>
+														<li><a target="_self" href="#">Red dream lover</a></li>
+														<li><a target="_self" href="#">ROBINLO&CO.罗宾诺</a></li>
+														<li><a target="_self" href="#">PathFinder</a></li>
+														<li><a target="_self" href="#">PLAYBOY</a></li>
+													</ul>
+												</div>
+												<div>
+													款式：
+													<ul>
+														<li><a target="_self" href="#">休闲皮鞋</a></li>
+														<li><a target="_self" href="#">单鞋</a></li>
+														<li><a target="_self" href="#">靴子</a></li>
+														<li><a target="_self" href="#">凉鞋</a></li>
+														<li><a target="_self" href="#">凉拖</a></li>
+														<li><a target="_self" href="#">短靴</a></li>
+														<li><a target="_self" href="#">凉靴</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+													</ul>
+												</div>
+												<div>
+													跟款：
+													<ul>
+														<li><a target="_self" href="#">休闲皮鞋</a></li>
+														<li><a target="_self" href="#">单鞋</a></li>
+														<li><a target="_self" href="#">靴子</a></li>
+														<li><a target="_self" href="#">凉鞋</a></li>
+														<li><a target="_self" href="#">凉拖</a></li>
+														<li><a target="_self" href="#">短靴</a></li>
+														<li><a target="_self" href="#">凉靴</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+													</ul>
+												</div>
+												<div>
+													热门推荐：
+													<ul>
+														<li><a target="_self" href="#">休闲皮鞋</a></li>
+														<li><a target="_self" href="#">单鞋</a></li>
+														<li><a target="_self" href="#">靴子</a></li>
+														<li><a target="_self" href="#">凉鞋</a></li>
+														<li><a target="_self" href="#">凉拖</a></li>
+														<li><a target="_self" href="#">短靴</a></li>
+														<li><a target="_self" href="#">凉靴</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+														<li><a target="_self" href="#">布鞋</a></li>
+													</ul>
+												</div>
+											</div>
+										</ul></li>
+									<li class="man shop_line b_g_c" id="man_id"><i class="i"></i><span>男鞋</span>
+										<ul class="small_shop">
+											<li><a target="_blank" title="商务休闲" href="#">商务休闲</a></li>
+											<li><a target="_blank" title="商务正装" href="#">商务正装</a></li>
+											<li><a target="_blank" title="休闲皮鞋" href="#">休闲皮鞋</a></li>
+											<li><a target="_blank" title="巴利世家" href="#">巴利世家</a></li>
+											<div class="right_shop_man"></div>
+										</ul></li>
+									<li class="sport shop_line b_g_c" id="sport_id"><i
+										class="i"></i>运动休闲
+										<ul class="small_shop">
+											<li><a target="_blank" title="跑步鞋" href="#">跑步鞋</a></li>
+											<li><a target="_blank" title="潮流板鞋" href="#">潮流板鞋</a></li>
+											<li><a target="_blank" title="户外鞋" href="#">户外鞋</a></li>
+											<li><a target="_blank" title="篮球鞋" href="#">篮球鞋</a></li>
+											<li><a target="_blank" title="足球鞋" href="#">足球鞋</a></li>
+											<li><a target="_blank" title="常青款" href="#">常青款</a></li>
+											<div class="right_shop_sport"></div>
+										</ul></li>
+								</ul>
+							</div></li>
+					<li class="gif_301_wrap" style="padding-left: 30px;"><a
+						target="_blank" href="#" class="gif_301">首页</a></li>
+
+					<li><a target="_blank" href="#">男鞋</a></li>
+					<li class=""><a target="_blank" href="#">女鞋</a></li>
+					<li class=""><a target="_blank" href="#">童鞋</a></li>
+					<li class=""><a target="_blank" href="#">团购</a></li>
+					<li class=""><a target="_blank" href="#">免单</a></li>
+				</ul>
+				<div class="header_pop_subAtc box-shadow" id="header_pop_subAct"
+					style=""></div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 	<div class="screen"> -->
+	<!-- 		<div class="screen_body"> -->
+	<!-- 			<div class="screen_container" > -->
+	<!-- 				<img alt="" id="imgs" style="width: 100%" src="http://p0.jmstatic.com/banner/3477/68924_1920_350_002-web.jpg?1457677871"/> -->
+	<!-- 			</div> -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
+
+	<!-- start search_goods -->
+	<div id="search_result">
+		<div class="search_title">
+			<a>全部结果&gt;</a>
+			<!-- 搜索店铺，不显示 -->
+			<a>鞋</a>
+		</div>
+		<div class="search_content">
+			<div class="search_content_left">
+				<div class="search_content_left1">
+					<div>
+						<div class="form-group backgroundcolor forall" >
+							<div class="col-2">
+								<div class="input-label"></div>
+							</div>
+							<div class="col-10">
+								<div class="input-value fontred">所有类别</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div>
+						<div class="form-group backgroundcolor"  onclick="show_hid('0')">
+							<div class="col-2">
+								<div class="input-label"><div class="forGoods_man wk"></div></div>
+							</div>
+							<div class="col-10">
+								<div class="input-value">男鞋</div>
+							</div>
+							<div class="clear"></div>
+						</div><div style="display: block;" id="sh0">
+					<div class="forClass">运动鞋 (9)</div>
+					<div class="forClass">豆豆鞋 (4)</div>
+					<div class="forClass">帆布鞋 (1)</div>
+					<div class="forClass">小白鞋/板鞋 (17)</div>
+					<div class="forClass">休闲鞋 (19)</div>
+					<div class="forClass">牛津鞋 (2)</div>
+					<div class="forClass">商务正装 (5)</div>
+					<div class="forClass">沙滩鞋 (9)</div>						
+					</div>
+					</div>
+					<div>
+						<div class="form-group backgroundcolor" onclick="show_hid('1')">
+							<div class="col-2">
+								<div class="input-label"><div class="forGoods_woman"></div></div>
+							</div>
+							<div class="col-10">
+								<div class="input-value">女鞋</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+				<div style="display: none;" id="sh1">
+					<div class="forClass">运动鞋 (9)</div>
+					<div class="forClass">豆豆鞋 (4)</div>
+					<div class="forClass">帆布鞋 (1)</div>
+					<div class="forClass">小白鞋/板鞋 (17)</div>
+					<div class="forClass">休闲鞋 (19)</div>
+					<div class="forClass">牛津鞋 (2)</div>
+					<div class="forClass">商务正装 (5)</div>
+					<div class="forClass">沙滩鞋 (9)</div>								
+					</div>
+					</div>
+					<div>
+						<div class="form-group backgroundcolor" onclick="show_hid('2')">
+							<div class="col-2">
+								<div class="input-label"><div class="forGoods_child"></div></div>
+							</div>
+							<div class="col-10">
+								<div class="input-value">童鞋</div>
+							</div>
+							<div class="clear"></div>
+						</div><div style="display: none;" id="sh2">
+					<div class="forClass">运动鞋 (9)</div>
+					<div class="forClass">豆豆鞋 (4)</div>
+					<div class="forClass">帆布鞋 (1)</div>
+					<div class="forClass">小白鞋/板鞋 (17)</div>
+					<div class="forClass">休闲鞋 (19)</div>
+					<div class="forClass">牛津鞋 (2)</div>
+					<div class="forClass">商务正装 (5)</div>
+					<div class="forClass">沙滩鞋 (9)</div>								
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="search_content_right">
+				<div class="search_content_right_content">
+<!-- 					<div class="search_content_right_right">111</div> -->
+<!-- 					<div class="search_content_right_left">222</div> -->
+						<div class="form-group-margin0 form_group_line">
+							<div class="col-2a">
+								<div class="input-label font_cl">上市年份季节</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">2015春季</a>
+									<a class="spanpadding">2015</a>
+									<a class="spanpadding">2015</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">价格</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">0-99</a>
+									<a class="spanpadding">100-199</a>
+									<a class="spanpadding">200</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">适用对象 </div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">青年</a>
+									<a class="spanpadding">儿童</a>
+									<a class="spanpadding">老年</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">帮面材质</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+										<a class="spanpadding">头层牛皮</a>
+											<a class="spanpadding">pu</a>
+											<a class="spanpadding">网布</a>
+											<a class="spanpadding">帆布</a>
+											<a class="spanpadding">磨砂皮/绒皮</a>
+											<a class="spanpadding">二层牛皮</a>
+											<a class="spanpadding">超纤</a>
+											<a class="spanpadding">马毛</a>
+											<a class="spanpadding">绒面</a>
+											<a class="spanpadding">弹力布</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">风格</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">简约</a>
+									<a class="spanpadding">休闲</a>
+									<a class="spanpadding">时尚</a>
+									<a class="spanpadding">日韩</a>
+									<a class="spanpadding">运动</a>
+									<a class="spanpadding">欧美</a>
+									<a class="spanpadding">复古</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">鞋制作工艺</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">胶粘鞋</a>
+									<a class="spanpadding">注塑鞋</a>
+									<a class="spanpadding">缝制鞋</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">内里材质</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+								<a class="spanpadding">pu</a>
+								<a class="spanpadding">猪皮</a>
+								<a class="spanpadding">网纱</a>
+								<a class="spanpadding">布</a>
+								<a class="spanpadding">无内里</a>
+								<a class="spanpadding">人造短毛绒</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">鞋垫材质</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+								<a class="spanpadding">pu</a>
+								<a class="spanpadding">布</a>
+								<a class="spanpadding">猪皮</a>
+								<a class="spanpadding">牛皮</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+<div style="display: none">						
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">适用场景</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+								<a class="spanpadding">日常</a>
+								<a class="spanpadding">休闲</a>
+								<a class="spanpadding">运动</a>
+								<a class="spanpadding">约会</a>
+								<a class="spanpadding">出行</a>
+								<a class="spanpadding">工作</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">鞋底材质</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">橡胶</a>
+									<a class="spanpadding">PU/聚氨酯</a>
+									<a class="spanpadding">牛筋</a>
+									<a class="spanpadding">MD底</a>
+									<a class="spanpadding">EVA</a>
+									<a class="spanpadding">TPR</a>
+									<a class="spanpadding">TPU</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">价格区间</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">20 ~ 55</a>
+									<a class="spanpadding">55 ~ 90</a>
+									<a class="spanpadding">90 ~ 125</a>
+									<a class="spanpadding">125 ~ 160</a>
+									<a class="spanpadding">160 ~ 195</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+<!--					更多标签 -->
+
+						<div class="form-group-margin0 form_group_line" >
+							<div class="col-2a">
+								<div class="input-label font_cl">价格区间</div>
+							</div>
+							<div class="col-10a">
+								<div class="input-value fontred">
+									<a class="spanpadding">20 ~ 55</a>
+									<a class="spanpadding">55 ~ 90</a>
+									<a class="spanpadding">90 ~ 125</a>
+									<a class="spanpadding">125 ~ 160</a>
+									<a class="spanpadding">160 ~ 195</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+</div>
+<!--					更多标签 END-->
+						<div class="form-group-margin0 form_group_line1 s_more" >
+							<div class="col-12a">
+								<a class="spanpadding">更多标签</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+<!-- 				标签  END -->
+						<div class="form-group" style="background-color:#d9edf7;overflow: hidden;">
+							<div class="col-1">		
+								<div class="input-label clr">默认<img class="icon" src="./static/images/xia.png"></div>
+							</div>
+							<div class="col-1">		
+								<div class="input-value clr">销量<img class="icon" src="./static/images/xia.png"></div>
+							</div>
+							<div class="col-1">		
+								<div class="input-value clr">上架时间<img class="icon" src="./static/images/xia.png"></div>
+							</div>
+							<div class="col-1">		
+								<div class="input-value clr">价格<img class="icon" src="./static/images/xia.png"></div>
+							</div>
+							<div class="col-2">		
+								<div class="input-value">
+											价格&nbsp;&nbsp;<span>¥ </span><input type="text" class="input-text1 input-text-sm"/>
+								</div>
+							</div>
+							<div class="col-2">		
+								<div class="input-value">
+											<span>¥ </span><input type="text" class="input-text1 input-text-sm"/>
+								</div>
+							</div>
+							<div class="col-1">		
+								<div class="input-value clr">确定</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+<!-- 						start goods -->
+						<div class="form-group" >
+							<div class="col-12">
+						<c:if test="${not empty List}">
+						<c:forEach items="${List}" var="item">
+								<div class="gdlist">
+									<div class="goods_id">
+										<a href="goodsdetil.do"><img class="lazy" alt="" src="<c:out value='${item.GoodsPicUrl}'/>" style="display: inline;"></a></div>
+									<div class="goods_name"style="margin: 5px 5px;"><a target="_blank" href="/Home/Goods/4309086" class="search_list_text"  goods_id="4309086"><c:out value='${item.GoodsTitle}'/> <em style="color:#db2929;"></em></a>
+									</div>
+									<div class="search_list_rmbs">
+										<em class="search_list_oldrmb"><s>¥ <c:out value='${item.GoodsOldprice}'/></s></em>
+									</div>
+									<div  class="goods_price" style="font-size:20px;color: #ed145b;margin-left: 5px;"><em class="search_list_yuanrmb">¥<em id="sales_price" style="font-size:20px;font-family:Arial;padding-left: 2px"><c:out value='${item.GoodsNewprice}'/></em>
+									</em></div>
+								</div>
+								</c:forEach>
+								</c:if>
+								<c:if test="${empty List}">
+								<div style="color: #ed145b;text-align: center;">无记录</div>
+								</c:if>
+							</div>
+							<div class="clear"></div>
+						</div>
+<!-- 						end goods -->
+						<div class="form-group" >
+							<div class="col-12">
+							<div><ul class="web_list_page" style="padding-left:20px;padding-right: 20px;">
+						<li>共 11 页</li>
+						<li>到第</li>
+						<li><input style="width:38px;height:25px;border:1px solid #337ab7;text-align:center" name="page_input" id="page_input" value="1" url="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=" pagetotal="11"></li>
+						<li>页</li>
+						<li class="product_submit" id="page_submit" url="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=" pagetotal="11">确定</li>
+					</ul></div>
+					<div><ul class="web_list_page">
+						<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=0">最前</a></li>
+								<li><span>1</span></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=1">2</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=2">3</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=3">4</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=4">5</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=5">6</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=6">7</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=7">8</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=8">9</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=9">10</a></li>
+								<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=10">11</a></li>
+							<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=1">下一页</a></li>
+						<li><a href="/Home/Search?key=%e9%9e%8b&amp;o=-1&amp;st=False&amp;page=10">最后</a></li>
+					</ul></div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- start  foot -->
+	<footer class="foolter" style="width: 1349px;">
+	<div class="top">
+		<div class="topback">
+			<div class="first">
+				<ul>
+					<li class="them">新手帮助</li>
+					<li class="other"><a href="#" title="正品保证" target="_blank"
+						rel="nofollow">正品保证</a></li>
+					<li class="other"><a href="#" title="售后服务须知" target="_blank"
+						rel="nofollow">售后服务须知</a></li>
+					<li class="other"><a href="#" title="常见问题" target="_blank"
+						rel="nofollow">常见问题</a></li>
+					<li class="other"><a href="#" title="优惠指南" target="_blank"
+						rel="nofollow">优惠指南</a></li>
+				</ul>
+			</div>
+			<div class="second">
+				<ul>
+					<li class="them">购物指南</li>
+					<li class="other"><a href="#" title="尺码选择" target="_blank"
+						rel="nofollow">尺码选择</a></li>
+					<li class="other"><a href="#" title="发货时间" target="_blank"
+						rel="nofollow">发货时间</a></li>
+					<li class="other"><a href="#" title="配送运费" target="_blank"
+						rel="nofollow">配送运费</a></li>
+					<li class="other"><a href="#" title="签收/验货" target="_blank"
+						rel="nofollow">签收/验货</a></li>
+				</ul>
+			</div>
+			<div class="third">
+				<ul>
+					<li class="them">支付/配送</li>
+					<li class="other"><a href="#" title="货到付款" target="_blank"
+						rel="nofollow">货到付款</a></li>
+					<li class="other"><a href="#" title="网上支付" target="_blank"
+						rel="nofollow">网上支付</a></li>
+					<li class="other"><a href="#" title="配送时间" target="_blank"
+						rel="nofollow">配送时间</a></li>
+					<li class="other"><a href="#" title="配送查询" target="_blank"
+						rel="nofollow">配送查询</a></li>
+				</ul>
+			</div>
+			<div class="fourth">
+				<ul>
+					<li class="them">售后服务</li>
+					<li class="other"><a href="#" title="退换货政策" target="_blank"
+						rel="nofollow">退换货政策</a></li>
+					<li class="other"><a href="#" title="退换货办理" target="_blank"
+						rel="nofollow">退换货办理</a></li>
+					<li class="other"><a href="#" title="退款说明" target="_blank"
+						rel="nofollow">退款说明</a></li>
+				</ul>
+			</div>
+			<div class="fifth" style="border-right: 0px #fafafa solid;">
+				<ul>
+					<li class="them">会员服务</li>
+					<li class="other"><a href="#" title="建议反馈" target="_blank"
+						rel="nofollow">建议反馈</a></li>
+					<li class="other"><a href="#" title="CEO邮箱" target="_blank"
+						rel="nofollow">售后服务</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="center">
+		<div class="HelpUL">
+			<ul>
+				<li class="first" style="padding-left: 175px;"><a href="#"
+					target="_blank" rel="nofollow">了解XX</a><span class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank" rel="nofollow">联系XX</a><span
+					class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank" rel="nofollow">版权声明</a><span
+					class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank">友情链接</a><span class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank">网店货源网</a><span class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank">温州豆花女鞋批发</a><span
+					class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank">货源哦</a><span class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank">温州鞋批发网</a><span class="ft_span">丨</span></li>
+				<li><a href="#" target="_blank">投诉与建议</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="copyright">
+			Copyright © 2008 - 2015
+			XX网&nbsp;&nbsp;版权所有&nbsp;&nbsp;&nbsp;&nbsp;买鞋子&nbsp;&nbsp;上XX&nbsp;&nbsp;&nbsp;&nbsp;<a
+				href="#" target="_blank" rel="nofollow">粤ICP备140191aa号</a>
+		</div>
+	</div>
+	</footer>
+	<!-- <div class="foot_tt"> -->
+	<!-- 	<div class="foot_tit"><span>友情链接</span></div> -->
+	<!-- 	<div class="foot_txt"> -->
+	<!-- 		&nbsp; -->
+	<!-- 		<a href="http://www.114baidu.net" target="_blank">潍坊物流</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.qituan.net" target="_blank">企业福利团购</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.douhua.net" target="_blank">温州豆花女鞋批发</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.168dp.com" target="_blank">网店货源网</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.jumei8.net" target="_blank">温州鞋批发网</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.54086.com/b2b/" target="_blank">b2b网站大全</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.huoyuano.com/" target="_blank">货源哦</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.2vs8.com" target="_blank">28货源导航网</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.huoyuanzhijia.com" target="_blank">货源之家</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.igood.cn" target="_blank">爱多秀母婴分享社区</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.duxiangtuan.com" target="_blank">折800</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.vipconverse.com" target="_blank">converse帆布鞋</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.jiuyuango.com" target="_blank">九块九包邮网</a> -->
+	<!-- 		&nbsp;|&nbsp;<a href="http://www.vip800.com" target="_blank">金折800官网</a> -->
+	<!-- 			</div> -->
+	<!-- 			</div> -->
+	<!-- <div class="Ubag_footer_box"> -->
+	<!-- 	<div class="Ubag_width950"> -->
+	<!-- 		<div class="Ubag_footer"> -->
+	<!--         	<p style="margin: 0;"> -->
+	<!--             	<a href="#" target="_blank">关于我们</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">帮助中心</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">隐私申明</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">会员优惠</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">售后服务</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">业务合作</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">网站公告</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">促销信息</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">商城条款</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+	<!--             	<a href="#" target="_blank">投诉与建议</a> -->
+	<!--             </p> -->
+	<!--             <p style="margin: 0;color: #fff;"> -->
+	<!--             Copyright 2012 - 2015 &nbsp;&nbsp;<a href="http://www.jumei8.net"><b style="color:#fe9c2d;">www.xxxx.com</b>&nbsp;&nbsp;</a> All Rights Reserved &nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn">浙ICP备1301XX56号-1</a> -->
+	<!--             &nbsp;&nbsp;<span class="stat_code"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=&amp;site=qq&amp;menu=yes"></a> -->
+	<!-- <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=&amp;site=qq&amp;menu=yes"></a></span>            </p> -->
+	<!--         </div> -->
+	<!--     </div> -->
+	<!-- </div> -->
+	<!-- <hr> -->
+	<!-- JiaThis Button BEGIN -->
+	<!-- <div class="jiathis_style"> -->
+	<!-- 	<span class="jiathis_txt">分享到：</span> -->
+	<!-- 	<a class="jiathis_button_tools_1"></a> -->
+	<!-- 	<a class="jiathis_button_tools_2"></a> -->
+	<!-- 	<a class="jiathis_button_tools_3"></a> -->
+	<!-- 	<a class="jiathis_button_tools_4"></a> -->
+	<!-- 	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a> -->
+	<!-- 	<a class="jiathis_counter_style"></a> -->
+	<!-- </div> -->
+	<!-- <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script> -->
+	<!-- JiaThis Button END -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- <input type="button" class="" value="提交" onclick="submit()"/> -->
+	<%-- <zt:mobileTag formName="form1"  leftColSpan="2" rightColSpan="8" logined="false"  /> --%>
+	<!-- </form> -->
+	<script type="text/javascript">
+		function tologin() {
+			document.form1.submit();
+		}
+		function logout() {
+			document.form2.submit();
+		}
+
+		$(function() {
+			window.top.document.getElementById("top_title").innerHTML = "首页";
+			$(".shop_line").hover(function() {
+				// 						debugger;
+				$(this).addClass("shop_show");
+
+				if ($(this).attr("id") == "man_id") {
+					$("#span_line").addClass("span_line");
+					$(".right_shop_man").addClass("right_shop_blod");
+					$(".shop_id_man").css("display", "block");
+				}
+				if ($(this).attr("id") == "woman_id") {
+					$("#span_line").addClass("span_line");
+					$(".right_shop_woman").addClass("right_shop_blod");
+					$(".RightCata").css("display", "block");
+				}
+				if ($(this).attr("id") == "sport_id") {
+					$("#span_line").addClass("span_line");
+					$(".right_shop_sport").addClass("right_shop_blod");
+					$(".shop_id_woman").css("display", "block");
+				}
+			}, function() {
+				debugger;
+				$(this).removeClass("shop_show");
+				if ($(this).attr("id") == "man_id") {
+					$("#span_line").removeClass("span_line");
+					$(".right_shop_man").removeClass("right_shop_blod")
+					$(".shop_id_man").css("display", "none");
+				}
+				if ($(this).attr("id") == "woman_id") {
+					$("#span_line").removeClass("span_line");
+					$(".right_shop_woman").removeClass("right_shop_blod");
+					$(".RightCata").css("display", "none");
+				}
+				if ($(this).attr("id") == "sport_id") {
+					$("#span_line").removeClass("span_line");
+					$(".right_shop_sport").removeClass("right_shop_blod")
+					$(".shop_id_sport").css("display", "none");
+				}
+			});
+		});
+		//end
+		function changeCity(obj) {
+			debugger;
+			if (isUndefinedOrNull(obj) || obj == "") {
+				$(".city").removeClass("aa");
+				$(".add-default-city").html("上海");
+				$(".header-city-list").css("display", "none");
+				$(("#shanghai")).addClass("aa");
+			} else {
+				var d = document.getElementById(obj).innerText;
+				if (!isUndefinedOrNull(d) && d != "") {
+					$(".city").removeClass("aa");
+					$(".add-default-city").html(d);
+					$(".header-city-list").css("display", "none");
+					$(("#" + obj)).addClass("aa");
+				} else {
+					$(".city").removeClass("aa");
+					$(".add-default-city").html("上海");
+					$(".header-city-list").css("display", "none");
+					$(("#shanghai")).addClass("aa");
+				}
+			}
+		}
+
+		function show_cart() {
+			if ($(".cart_content_center").length > 0) {
+				$(".cart_content_all").css("display", "block");
+			} else {
+				$(".cart_content_null").css("display", "block");
+			}
+			$(".num").css("display", "block");
+
+			$(".cart-icons").css("display", "block");
+		}
+		function hidden_cart() {
+			if ($(".cart_content_center").length > 0) {
+				$(".cart_content_all").css("display", "none");
+			} else {
+				$(".cart_content_null").css("display", "none");
+			}
+			$(".num").css("display", "none");
+			$(".cart-icons").css("display", "none");
+		}
+
+		function show_current() {
+			$("#show_hidd").css("display", "block");
+		}
+		function hidden_current() {
+			$("#show_hidd").css("display", "none");
+		}
+
+		//图片切换
+		var timeInterval = 3000;
+		var arr = new Array();
+		var curIndex = 0;
+		arr[0] = "./static/images/2.jpg";
+		arr[1] = "./static/images/1.jpg";
+		arr[2] = "http://p0.jmstatic.com/banner/3477/68924_1920_350_002-web.jpg?1457677871";
+		function changeimages() {
+			debugger;
+			var obj = document.getElementById("imgs");
+			if (curIndex == arr.length - 1) {
+				curIndex = 0;
+			} else {
+				curIndex += 1;
+			}
+			var url = arr[curIndex];
+			// 			$("#imgs");
+			obj.src = arr[curIndex];
+		}
+// 		setInterval(changeimages, timeInterval);
+		
+function show_hid(item){
+	debugger;
+	if('0'==item){
+		if($("#sh0").css("display")=="none"){
+			$("#sh0").css("display","block");return;
+		}$("#sh0").css("display","none");
+	}
+	if('1'==item){
+		if($("#sh1").css("display")=="none"){
+			$("#sh1").css("display","block");return;
+		}$("#sh1").css("display","none");	
+	}
+	if('2'==item){
+		if($("#sh2").css("display")=="none"){
+			$("#sh2").css("display","block");return;
+		}$("#sh2").css("display","none");	
+	}
+	
+}
+	</script>
+</body>
+</html>

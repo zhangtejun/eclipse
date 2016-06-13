@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.org/dtds/sql-map-2.dtd">
+<sqlMap namespace="Shop">
+    <typeAlias alias="String" type="java.lang.String"/>
+    <typeAlias alias="HashMap" type="java.util.HashMap"/>
+    <resultMap id="selectForMap" class="HashMap">
+        <result property="UserName" column="username"/>
+        <result property="PassWord" column="password"/>
+        <result property="Address" column="address"/>
+        <result property="Mobile" column="mobile"/>
+        <result property="Email" column="email"/>
+    </resultMap>
+    <select id="qryCustomer" parameterClass="HashMap" resultMap="selectForMap">
+        <![CDATA[
+        select 
+        	username,password,address,mobile,email
+        from tb_customer
+        where username=#UserName# and password=#PassWord#
+        	]]>
+    </select>
+    <resultMap id="selectForPhoneForMap" class="HashMap">
+        <result property="UserName" column="username"/>
+        <result property="PassWord" column="password"/>
+        <result property="Address" column="address"/>
+        <result property="Mobile" column="mobile"/>
+        <result property="Email" column="email"/>
+    </resultMap>
+    <select id="qryCustomerForPhone" parameterClass="HashMap" resultMap="selectForPhoneForMap">
+        <![CDATA[
+        select 
+        	username,password,address,mobile,email
+        from tb_customer
+        where mobile=#UserName#
+        	]]>
+    </select>
+    <resultMap id="selectCountForMap" class="HashMap">
+        <result property="ToTal" column="TOTAL"/>
+    </resultMap>
+    <select id="qryCustomerCount" parameterClass="HashMap" resultMap="selectCountForMap">
+        <![CDATA[
+        select 
+        	count(*) TOTAL
+        from tb_customer
+        where username=#UserName#
+        	]]>
+    </select>
+<!--     重置密码 -->
+        <resultMap id="restpassForMap" class="HashMap">
+        <result property="Email" column="email"/>
+        <result property="UserName" column="username"/>
+        <result property="Mobile" column="mobile"/>
+    </resultMap>
+    <select id="restpass" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where username=#UserName#
+        	]]>
+    </select>
+    <select id="restpassFemail" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where email=#UserName#
+        	]]>
+    </select>
+    <select id="restpassFphone" parameterClass="HashMap" resultMap="restpassForMap">
+        <![CDATA[
+        select 
+        	username,email,mobile
+        from tb_customer
+        where mobile=#UserName#
+        	]]>
+    </select>
+<!--     注册 -->
+    <insert id="insertCustomer" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_member(member_name,member_pwd,member_state,member_paypwd)
+        	values(#Mobile#,#PassWord#,#MemberState#,#MemberPaypwd#)
+        	]]>
+    </insert>
+    <insert id="insertCustomerkz" parameterClass="HashMap">
+        <![CDATA[
+        insert 
+        into sp_kz_member(member_id,member_grade,member_addtime,member_mobile)
+        	values(#MemberId#,#MemberGrade#,#MemberAddtime#,#Mobile#)
+        	]]>
+    </insert>
+        <resultMap id="selectForretMap" class="HashMap">
+        <result property="MemberId" column="member_id"/>
+    </resultMap>
+      <select id="selectForret" parameterClass="HashMap" resultMap="selectForretMap">
+        <![CDATA[
+        select 
+        	member_id
+        from sp_member
+        where member_name=#Mobile#
+        	]]>
+    </select>  
+<!-- ajax查询购物车     -->
+    	<resultMap id="selectAjaxCartMap" class="HashMap">
+        	<result property="MemberId" column="cart_me_id"/>
+        	<result property="TitleInfo" column="cart_titleinfo"/>
+        	<result property="CartPrice" column="cart_cartprice"/>
+        	<result property="CartPriceNum" column="cart_cartpricenum"/>
+        	<result property="CartPicUrl" column="cart_pic"/>
+   		</resultMap>
+       <select id="selectAjaxCart" parameterClass="HashMap" resultMap="selectAjaxCartMap">
+        <![CDATA[
+ 		SELECT *  FROM  sp_cartlist WHERE  cart_me_id=#MemberId# 
+        	]]>
+    </select>     
+  
+    
+    <update id="updateCustomer" parameterClass="HashMap">
+        <![CDATA[
+        update tb_customer
+     	set password=#PassWord#
+     	where username=#UserName#
+        	]]>
+    </update>
+</sqlMap>    
